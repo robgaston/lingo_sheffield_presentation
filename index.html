@@ -96,10 +96,9 @@
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
-					style="width: 600px; left: 20px; top: 640px; height: auto;">
+					style="width: 800px; left: 20px; top: 640px; height: auto;">
 					<div class="sl-block-content" style="text-align: left;">
-						<h3><span style="font-size:0.7em">Arches Developer Meeting, Sheffield</span></h3>
-						<h3><span style="font-size:0.7em">June 2026</span></h3>
+						<h3><span style="font-size:0.7em">Arches Developer Meeting, Sheffield, June 2026</span></h3>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="line"
@@ -119,6 +118,10 @@
 							data-natural-height="248" data-src="deck/fargeo-logo-text-white.png">
 					</div>
 				</div>
+				<aside class="notes">
+					- Welcome, introduce yourself
+					- ~30s, just let people settle
+				</aside>
 			</section>
 
 			<!-- SLIDE 2: What is Lingo? -->
@@ -130,24 +133,27 @@
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 90px; height: auto;" data-text-layout="fixed">
-					<div class="sl-block-content" style="text-align: left; font-size: 150%;">
+					style="width: 560px; left: 20px; top: 90px; height: auto;" data-text-layout="fixed">
+					<div class="sl-block-content" style="text-align: left; font-size: 130%;">
 						<ul>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">SKOS-compliant thesaurus management</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">the authoring counterpart to arches-controlled-lists</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">The authority data management counterpart to arches-controlled-lists</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Together they replace the RDM</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Built entirely on Arches 8.1 core + extensions</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">1.0.0 released March 2026; 1.1.0 in development</li>
 						</ul>
 					</div>
 				</div>
-				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 560px; height: auto;">
-					<div class="sl-block-content" style="text-align: left; font-size: 90%; font-style: italic;">
-						<p>I gave a full product demo last month - today I want to talk about how we built Lingo and what we learned that's relevant to anyone building on Arches.</p>
+				<div class="sl-block" data-block-type="image" style="width: 620px; left: 620px; top: 160px; height: auto;">
+					<div class="sl-block-content">
+						<img data-src="deck/lingo-demo.gif" style="width: 620px; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.4);">
 					</div>
 				</div>
-				<!-- TODO: GIF from demo video - navigating scheme list → hierarchy → concept detail (~5s loop) -->
+				<aside class="notes">
+					- "I gave a full product demo last month; today I want to talk about how we built Lingo and what we learned that's relevant to anyone building on Arches."
+					- Quick orientation slide: don't linger, just establish what Lingo is
+					- Transition: "So where does Lingo sit in the Arches ecosystem?"
+				</aside>
 			</section>
 
 			<!-- SLIDE 3: What Kind of Thing Is Lingo? (Architecture Layers) -->
@@ -191,6 +197,13 @@
 						</ul>
 					</div>
 				</div>
+				<aside class="notes">
+					- Key point: this three-tier pattern (core → extensions → apps) is how we think about Arches 8 development
+					- Lingo isn't a plugin or a fork: it's a full application that composes platform pieces
+					- Mention: "yours?" is intentional: this talk is about showing you how
+					- ~60s
+					- Transition: "Let me zoom into one specific relationship here"
+				</aside>
 			</section>
 
 			<!-- SLIDE 4: Lingo + arches-controlled-lists -->
@@ -229,14 +242,18 @@
 					style="width: 1200px; left: 20px; top: 450px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 130%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Lingo also <em>uses</em> ACL internally. For example, SKOS metadata (label types, concept types) are controlled list items</li>
-							<li class="fragment" data-fragment-index="1">An application can be both a consumer and a peer of the same extension</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Lingo also <em>uses</em> ACL internally: SKOS metadata like label types and concept types are controlled list items</li>
+							<li class="fragment" data-fragment-index="1">Your app can be both a consumer and a peer of the same extension</li>
 						</ul>
 					</div>
 				</div>
+				<aside class="notes">
+					- Point: the relationship between these two is interesting: Lingo is the authoring side, ACL is the consumption side, and they replace the RDM together
+					- Fun fact: Lingo uses ACL internally for its own metadata dropdowns. It's both a peer and a consumer.
+					- ~45s
+					- Transition: "So we've chosen to model vocabulary data as Arches resources. What does that look like?"
+				</aside>
 			</section>
-
-			<!-- SLIDE 5: Semantic Modeling with Arches -->
 			<section data-transition="default">
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 0px; height: auto;">
@@ -247,27 +264,34 @@
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 90px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 120%;">
-						<p>Arches' ontology-backed resource models let us describe polyhierarchical vocabulary data in a complete, self-describing way.</p>
+						<p>We model vocabulary data as Arches resources: ontology-backed, polyhierarchical, self-describing.</p>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 190px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 110%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Concepts and schemes are designed as <strong>Arches resource models</strong> based on the LinkedArt+ ontology</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Polyhierarchy, labels, notes, attribution; modeled semantically in tiles</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Benefit: edit log, lifecycle states, ETL, permissions come for free</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Trade-off: we must work with Arches data structures (tiles, nodegroups, JSONB)</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Concepts and schemes are <strong>Arches resource models</strong> built on the LinkedArt+ ontology</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Polyhierarchy, labels, notes, attribution; all modeled semantically in tiles</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">What you get for free: edit log, lifecycle states, ETL, permissions</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">The trade-off: you have to work with Arches data structures (tiles, nodegroups, JSONB)</li>
 						</ul>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 580px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-						<p><strong style="color: #e08c14;">Takeaway:</strong> semantic modeling gives you a complete, self-describing data layer, but you need good tooling to work with it efficiently.</p>
+						<p><strong style="color: #e08c14;">Takeaway:</strong> semantic modeling gives you a complete, self-describing data layer; you need good tooling to work with it efficiently.</p>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- This is the fundamental architectural decision: vocabulary data lives in Arches resource models
+					- The LinkedArt+ ontology gives us a complete, well-defined structure
+					- Emphasize the trade-off: you get everything for free, but you pay in complexity of data access
+					- This trade-off is what motivated arches-querysets (next slide)
+					- ~60s
+				</aside>
+				</section>
 
 			<!-- SLIDE 6: arches-querysets (vertical stack) -->
 			<section class="stack">
@@ -281,11 +305,11 @@
 					<div class="sl-block" data-block-type="text"
 						style="width: 1200px; left: 20px; top: 90px; height: auto;">
 						<div class="sl-block-content" style="text-align: left; font-size: 110%;">
-							<p>arches-querysets eliminated the biggest pain point of building on Arches tiles.</p>
+							<p>arches-querysets eliminated one of our biggest pain points: working directly with Arches tiles.</p>
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
-						style="width: 1200px; left: 20px; top: 150px; height: auto;">
+						style="width: 1200px; left: 20px; top: 190px; height: auto;">
 						<div class="sl-block-content" style="text-align: left;">
 							<pre><code class="language-python"># Before: raw tile queries by UUID
 tile = TileModel.objects.get(
@@ -300,6 +324,13 @@ label = tree.aliased_data.appellative_status[0] \
     .aliased_data.appellative_status_ascribed_name_content</code></pre>
 						</div>
 					</div>
+									<aside class="notes">
+						- Let the code speak; just highlight the before/after contrast
+						- "If you've ever written UUID-based tile queries, you know the pain"
+						- The aliased_data API gives you named traversal instead of UUID soup
+						- Lingo funded much of the arches-querysets development, so the two projects evolved together
+						- Transition: "And it integrates beautifully with DRF"
+					</aside>
 				</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="text"
@@ -324,6 +355,11 @@ label = tree.aliased_data.appellative_status[0] \
 							<p><strong style="color: #e08c14;">Takeaway:</strong> if you're writing tile-level APIs, start with arches-querysets. The boilerplate reduction is dramatic.</p>
 						</div>
 					</div>
+									<aside class="notes">
+						- Key message: arches-querysets isn't just a convenience: it's the right abstraction layer for tile APIs
+						- Mention: custom validation hooks let you enforce SKOS rules (like prefLabel uniqueness per language) in the serializer
+						- Transition: "So we had good APIs. What did we build on top of them?"
+					</aside>
 				</section>
 			</section>
 
@@ -348,7 +384,7 @@ label = tree.aliased_data.appellative_status[0] \
 							<ul>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Vue Router 4 handles all client-side navigation</li>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Arches serves a single HTML shell (<code>LingoRootView</code>) for all routes</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Arches shell still provides auth, notifications, nav chrome</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">You still get auth, notifications, and other APIs from core Arches</li>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Pages are domain-specific: hierarchy browser, concept editor, search, dashboard</li>
 							</ul>
 						</div>
@@ -356,9 +392,15 @@ label = tree.aliased_data.appellative_status[0] \
 					<div class="sl-block" data-block-type="text"
 						style="width: 1200px; left: 20px; top: 580px; height: auto;">
 						<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-							<p><strong style="color: #e08c14;">Takeaway:</strong> you don't have to use Arches' default report templates. A custom SPA with Vue Router gives you full control while still sitting inside the Arches shell.</p>
+							<p><strong style="color: #e08c14;">Takeaway:</strong> you don't have to use Arches' default report templates. A custom SPA gives you full control while still sitting inside the Arches shell.</p>
 						</div>
 					</div>
+									<aside class="notes">
+						- Point: Arches gives you a Django view that serves an HTML shell. From there, Vue Router takes over entirely.
+						- You still get auth, nav, notifications; the Arches chrome is there, but your app owns the content area
+						- This is genuinely a full SPA experience for the user
+						- Transition: "Let me show you what this looks like"
+					</aside>
 				</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="image"
@@ -385,7 +427,12 @@ label = tree.aliased_data.appellative_status[0] \
 							<p>Concept editor: hierarchy + detail</p>
 						</div>
 					</div>
-				</section>
+									<aside class="notes">
+						- Don't narrate these; just let people look
+						- "Here's the dashboard, and here's the concept editor where most of the work happens"
+						- ~20s, just a visual pause
+					</aside>
+					</section>
 			</section>
 
 			<!-- SLIDE 8: PostgreSQL Search (vertical stack) -->
@@ -409,10 +456,10 @@ label = tree.aliased_data.appellative_status[0] \
 						<div class="sl-block-content" style="text-align: left;">
 							<pre><code class="language-sql">-- pg_trgm GIN index on label tile content
 SELECT resourceinstanceid,
-       similarity(label_value, 'architectu') AS sim
+       similarity(label_value, 'censer') AS sim
 FROM label_tiles
-WHERE label_value % 'architectu'
-   OR label_value ILIKE '%architectu%'
+WHERE label_value % 'censer'
+   OR label_value ILIKE '%censer%'
 ORDER BY rank_tier, sim DESC</code></pre>
 						</div>
 					</div>
@@ -426,7 +473,14 @@ ORDER BY rank_tier, sim DESC</code></pre>
 							</ul>
 						</div>
 					</div>
-				</section>
+									<aside class="notes">
+						- Key point: we don't use Elasticsearch at all. Pure PostgreSQL with pg_trgm.
+						- The GIN index on label tiles gives us fast fuzzy matching
+						- 8-tier ranking means prefLabels and exact matches float to the top
+						- "This handles 500K+ terms in the Getty AAT without breaking a sweat"
+						- Transition: "For more complex queries, we built a composable search tree"
+					</aside>
+					</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="text"
 						style="width: 1200px; left: 20px; top: 0px; height: auto;">
@@ -458,24 +512,30 @@ ORDER BY rank_tier, sim DESC</code></pre>
 SELECT resourceinstanceid FROM descendants;</code></pre>
 						</div>
 					</div>
-				</section>
+									<aside class="notes">
+						- The recursive CTE is the key insight: hierarchy cascading as a SQL query
+						- AdvancedSearchEvaluator composes these into arbitrary boolean trees
+						- "You can say: find all concepts under X that have a German label containing 'Kirche'"
+						- ~90s on this one; the code is dense, take time to explain
+					</aside>
+					</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="image"
-						style="width: 700px; height: 440px; left: 30px; top: 90px;">
+						style="width: 700px; height: 440px; left: 30px; top: 70px;">
 						<div class="sl-block-content fragment fade-in-then-semi-out" data-fragment-index="0" style="z-index: 10; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.4);">
-							<img data-src="deck/lingo-quick-search.png" style="width: 700px; height: 440px; object-fit: cover; object-position: top; display: block; image-rendering: -webkit-optimize-contrast;">
+							<img data-src="deck/lingo-basic-search.gif" style="width: 700px; height: 440px; object-fit: cover; object-position: top; display: block; image-rendering: -webkit-optimize-contrast;">
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
-						style="width: 300px; left: 30px; top: 540px; height: auto;">
+						style="width: 300px; left: 30px; top: 520px; height: auto;">
 						<div class="sl-block-content fragment fade-in-then-semi-out" data-fragment-index="0" style="text-align: left; font-size: 80%; color: rgba(255,255,255,0.6);">
 							<p>Quick search - pg_trgm fuzzy matching</p>
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="image"
-						style="width: 750px; height: 520px; left: 480px; top: 120px;">
+						style="width: 965px; height: 520px; left: 300px; top: 120px;">
 						<div class="sl-block-content fragment fade-in" data-fragment-index="1" style="z-index: 20; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.6);">
-							<img data-src="deck/lingo-advanced-search.png" style="width: 750px; height: 520px; object-fit: cover; object-position: center; display: block; image-rendering: -webkit-optimize-contrast;">
+							<img data-src="deck/lingo-advanced-search.gif" style="width: 965px; height: 520px; object-fit: cover; object-position: center; display: block; image-rendering: -webkit-optimize-contrast;">
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
@@ -484,7 +544,12 @@ SELECT resourceinstanceid FROM descendants;</code></pre>
 							<p>Advanced search - composable query tree</p>
 						</div>
 					</div>
-				</section>
+									<aside class="notes">
+						- "Quick search on the left, advanced search on the right"
+						- Point out the query builder UI in the advanced search screenshot
+						- ~15s, visual pause
+					</aside>
+					</section>
 			</section>
 
 			<!-- SLIDE 9: The arches-search Decision -->
@@ -547,21 +612,26 @@ SELECT resourceinstanceid FROM descendants;</code></pre>
 					style="width: 1200px; left: 20px; top: 350px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 100%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">arches-search: same PostgreSQL-over-ES direction, driven by arches-rascolls</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Still pre-release; won't initially support Lingo's domain needs (recursive hierarchy)</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Decision: build our own behind clean abstractions, accept the debt, converge later</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Concern: Lingo adds GIN indexes on tiles; if many apps do this, write overhead compounds</li>
-							<li class="fragment" data-fragment-index="4">arches-search externalizes indexed data, a better long-term pattern for the ecosystem</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">arches-search shares our PostgreSQL-over-ES direction, but was pre-release and didn't yet support Lingo's domain needs</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">We built our own search behind clean abstractions; accept the short-term debt, plan to converge later</li>
+							<li class="fragment" data-fragment-index="2">arches-search externalizes indexed data (avoids GIN index proliferation on tiles): a better long-term pattern for the ecosystem</li>
 						</ul>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 640px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-						<p><strong style="color: #e08c14;">Takeaway:</strong> composability is a goal, not a guarantee. When an extension shares your direction but not your timeline, build behind clean interfaces so you can swap later.</p>
+						<p><strong style="color: #e08c14;">Takeaway:</strong> composability is a goal, not a guarantee. When an extension shares your direction but not your timeline, build behind clean interfaces and plan to swap later.</p>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- Walk through the timeline diagram: we started Lingo in 2024, arches-search was developing in parallel
+					- "We shared the same philosophy: PostgreSQL over ES, but their API wasn't ready for our domain needs"
+					- The decision to build our own was pragmatic, not ideological
+					- Convergence is planned for 1.1+ when arches-search adds the extension points we need
+					- ~90s on this one, the diagram needs explanation
+				</aside>
+				</section>
 
 			<!-- SLIDE 10: Frontend State Management (vertical stack) -->
 			<section class="stack">
@@ -597,6 +667,12 @@ await resourceStore.refreshNodegroup("appellative_status");
 							</ul>
 						</div>
 					</div>
+					<aside class="notes">
+						- "Two patterns that sound simple but prevented entire categories of bugs"
+						- Surgical refresh: after saving a nodegroup, only re-fetch that slice, not the whole resource
+						- At AAT scale, re-fetching everything would be brutal (58K concepts)
+						- Transition: "The other pattern is about duplicate API calls"
+					</aside>
 				</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="text"
@@ -628,6 +704,12 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 							<p><strong style="color: #e08c14;">Takeaway:</strong> in a Vue 3 app with complex resource data, design your state management strategy early. These patterns are reusable.</p>
 						</div>
 					</div>
+									<aside class="notes">
+						- A Map of in-flight promises: if the same fetch is already running, just return that promise
+						- "Expanding a tree node can trigger the same API call from multiple components simultaneously"
+						- Simple pattern, but eliminated a whole class of duplicate-request bugs
+						- Transition: "OK, shifting gears, let's talk about permissions"
+					</aside>
 				</section>
 			</section>
 
@@ -670,10 +752,17 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 580px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-						<p><strong style="color: #e08c14;">Takeaway:</strong> core Arches nodegroup-level permissions require costly graph lookups per request. If your access model is simpler, a lightweight DRF permission class avoids that overhead entirely.</p>
+						<p><strong style="color: #e08c14;">Takeaway:</strong> core Arches nodegroup-level permissions require costly graph lookups per request. If your access model is simpler, a lightweight DRF permission class skips all of that.</p>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- This is a good example of the "bypass generic features" philosophy
+					- Core Arches nodegroup permissions hit the graph on every request. That's expensive.
+					- Lingo's model is dead simple: you're an editor or you're not. One group check.
+					- "Don't assume you need the full RBAC machinery. Think about what your domain actually requires."
+					- ~60s
+				</aside>
+				</section>
 
 			<!-- SLIDE 12: Identifiers & Linked Open Data -->
 			<section data-transition="default">
@@ -693,20 +782,27 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 					style="width: 1200px; left: 20px; top: 180px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 110%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Identifier rules are defined per scheme - pattern, namespace, authority, sequence</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">On "publish" lifecycle event, URIs are minted for each concept in the scheme</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Built on Arches 8.1's <strong>custom typed resource identifiers</strong> - typed IDs for any application need</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Enables sharing vocabularies as linked open data with dereferenceable URIs</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Identifier rules are defined per scheme: pattern, namespace, authority</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">On the "publish" lifecycle event, URIs get minted for every concept in the scheme</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Built on Arches 8.1's <strong>custom typed resource identifiers</strong>: typed IDs you can define for any application need</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Result: your vocabularies are shareable as linked open data with dereferenceable URIs</li>
 						</ul>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 580px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-						<p><strong style="color: #e08c14;">Takeaway:</strong> lifecycle events + typed identifiers let Lingo produce publication-ready LOD without external tooling.</p>
+						<p><strong style="color: #e08c14;">Takeaway:</strong> lifecycle events + typed identifiers let Lingo produce publication-ready linked open data with no external tooling.</p>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- Walk through the flow: you define identifier rules on the scheme, hit publish, URIs get minted
+					- This uses Arches 8.1's custom typed resource identifiers: a core feature we can plug into
+					- The URIs are dereferenceable, so your vocabulary can participate in the linked data ecosystem
+					- "This was one of the headline requirements for Lingo 1.0: proper LOD publishing"
+					- ~60s
+				</aside>
+				</section>
 
 			<!-- SLIDE 13: Scaling FISH → AAT (vertical stack) -->
 			<section data-transition="default">
@@ -754,11 +850,18 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 440px; height: auto;">
-					<div class="sl-block-content" style="text-align: center; font-size: 140%;">
-						<blockquote style="border-left: 4px solid #e08c14; padding-left: 0.8em; font-style: italic;">Your first realistic dataset validates your model.<br>Your second validates your architecture.</blockquote>
+					<div class="sl-block-content" style="text-align: center; font-size: 140%; color: #e08c14; font-weight: 600;">
+						<p>FISH proved the model and UI worked.</p>
+						<p>Getty AAT proved the architecture and UX needed work.</p>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- "FISH was our proving ground: 12K concepts, mostly flat. It worked great."
+					- "Then we tried the Getty AAT: 58K concepts, deep polyhierarchy, 500K labels. That's when things got interesting."
+					- Let the table speak, then land the quote
+					- Transition: "So what actually broke?"
+				</aside>
+				</section>
 
 			<!-- SLIDE 14: What AAT Broke -->
 			<section data-transition="default">
@@ -820,7 +923,40 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 						<p>Design principle: <strong>load only what's visible, defer everything else.</strong></p>
 					</div>
 				</div>
-				<!-- TODO: GIF from demo showing hierarchy expanding lazily with AAT data -->
+				<aside class="notes">
+					- Walk through the table row by row; each row is a mini story
+					- Emphasize: none of these were bugs. They were design assumptions that didn't hold at scale.
+					- The design principle at the bottom is the single most important lesson from the whole project
+					- ~90s on this one
+					- Transition: "Here's what lazy loading actually looks like in practice"
+				</aside>
+				</section>
+
+			<!-- SLIDE 14b: Lazy Hierarchy in Action -->
+			<section data-transition="default">
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 0px; height: auto;">
+					<div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left;">
+						<h1><span style="font-size:0.9em">Lazy Hierarchy in Action</span></h1>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="image" style="width: 860px; left: 210px; top: 100px; height: auto;">
+					<div class="sl-block-content">
+						<img data-src="deck/lingo-hierarchy.gif" style="width: 860px; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.4);">
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 640px; height: auto;">
+					<div class="sl-block-content" style="text-align: center; font-size: 100%; color: #3d85c6;">
+						<p>Getty AAT: 58K concepts, deep polyhierarchy — children load only when a node is expanded</p>
+					</div>
+				</div>
+				<aside class="notes">
+					- Let the GIF play; no need to narrate heavily
+					- "Each expand call hits the API for just that node's children — nothing more"
+					- ~30s
+					- Transition: "We also learned a lot from watching real editors use the tool"
+				</aside>
 			</section>
 
 			<!-- SLIDE 15: UX Lessons -->
@@ -841,10 +977,9 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 					style="width: 1200px; left: 20px; top: 180px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 140%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Concept sets → a <strong>workflow tool</strong>, not just bookmarks</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Hierarchical position → <strong>clickable navigation</strong>, not just display</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Advanced search → <strong>attribution facets</strong> (find by source/contributor)</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Lifecycle retirement → <strong>edge cases</strong> only visible in sustained use</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Concept sets is a <strong>workflow tool</strong>, not just bookmarks</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Concepts displayed throughout the UI need to be rendered as links to allow for quick navigation</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Advanced search needed <strong>attribution facets</strong> (find by source/contributor)</li>
 						</ul>
 					</div>
 				</div>
@@ -854,6 +989,14 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 						<p><strong style="color: #e08c14;">Takeaway:</strong> Get real users doing real work as early as possible. Test scenarios model what you <em>expect</em>; real use reveals what you <em>missed</em>.</p>
 					</div>
 				</div>
+								<aside class="notes">
+					- "We had editors using Lingo for real vocabulary work months before 1.0"
+					- Each bullet is something we wouldn't have built without that feedback
+					- Concept sets: editors needed to group concepts for batch operations, not just bookmark them
+					- Lifecycle retirement: edge cases only emerge after months of sustained use
+					- ~60s
+					- Transition: "Let me distill all of this into some concrete lessons"
+				</aside>
 				</section>
 
 			<!-- SLIDE 16: Lessons for Application Developers (vertical stack) -->
@@ -869,30 +1012,44 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 						style="width: 1200px; left: 20px; top: 100px; height: auto;">
 						<div class="sl-block-content" style="text-align: left; font-size: 140%;">
 							<ul>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">If your domain fits Arches resource models, use them! (infrastructure for free)</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Design your graphs carefully; they're load-bearing and hard to change</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">If your domain fits Arches resource models, use them; you get so much infrastructure for free</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Design your graphs carefully though; they're load-bearing and hard to change later</li>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">arches-querysets should be your starting point for tile-level APIs</li>
 							</ul>
 						</div>
 					</div>
+									<aside class="notes">
+						- "These are the architecture lessons I wish someone had told me two years ago"
+						- Graph design: emphasize that changing graphs after you have data is painful. Get it right early.
+						- ~45s
+						- Transition: "What about working with extensions?"
+					</aside>
 				</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="text"
 						style="width: 1200px; left: 20px; top: 0px; height: auto;">
 						<div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left;">
-							<h1><span style="font-size:0.8em">Lessons: Extensions & Composition</span></h1>
+							<h1><span style="font-size:0.8em">Lessons: Extensions & Ecosystem</span></h1>
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
 						style="width: 1200px; left: 20px; top: 100px; height: auto;">
-						<div class="sl-block-content" style="text-align: left; font-size: 140%;">
+						<div class="sl-block-content" style="text-align: left; font-size: 130%;">
 							<ul>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Compose extensions deliberately; an app can consume multiple extensions</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">When timelines don't align, build behind clean abstractions</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Be honest about maintenance cost vs. waiting; plan for convergence</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Compose extensions deliberately; your app can consume several at once</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">When timelines don't align, build behind clean abstractions and plan for convergence</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Stable APIs and semantic versioning matter enormously; breaking changes cascade into your release timeline</li>
+								<li class="fragment" data-fragment-index="3">Extension developers: think about downstream consumers. Hooks and extension points are hard to align across projects</li>
 							</ul>
 						</div>
 					</div>
+									<aside class="notes">
+						- "This is both an app developer lesson and an extension developer lesson"
+						- The arches-search story is the concrete example: we shared direction but not timeline
+						- Stable APIs: if you're building an extension others will use, semver is non-negotiable
+						- ~45s
+						- Transition: "And on performance..."
+					</aside>
 				</section>
 				<section data-transition="default">
 					<div class="sl-block" data-block-type="text"
@@ -906,44 +1063,22 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 						<div class="sl-block-content" style="text-align: left; font-size: 140%;">
 							<ul>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Test with ambitious data early; an order of magnitude breaks assumptions</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Defer everything: load only what's visible, lazy-load the rest</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Custom apps can bypass generic core features (reporting, nodegroup-level permissions) that require graph-lookup queries; purpose-built code paths can be faster</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="3">PostgreSQL (pg_trgm, recursive CTEs, GIN indexes) is a powerful alternative to ES</li>
-								<li class="fragment" data-fragment-index="4">But: GIN indexes on the tiles table compound write overhead; if many apps add them, tile operations slow for everyone</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Defer everything possible: load only what's visible, lazy-load the rest</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Custom apps can skip generic core features (reporting, nodegroup permissions) that require many graph-lookup queries</li>
+								<li class="fragment" data-fragment-index="3">PostgreSQL (pg_trgm, GIN indexes, recursive CTEs) is powerful, but be mindful that GIN indexes on tiles compound write overhead across apps</li>
 							</ul>
 						</div>
 					</div>
+									<aside class="notes">
+						- "Test with ambitious data": can't say this enough. Our assumptions broke at 5x scale.
+						- The generic features point: core Arches does a lot of graph resolution per request. If your app knows its structure, you can skip that.
+						- GIN index concern: be honest that this is a real risk if the ecosystem grows
+						- ~60s
+					</aside>
 				</section>
 			</section>
 
-			<!-- SLIDE 17: Lessons for Extension Developers -->
-			<section data-transition="default">
-				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 0px; height: auto;">
-					<div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left;">
-						<h1><span style="font-size:0.8em">Lessons for Extension Developers</span></h1>
-					</div>
-				</div>
-				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 90px; height: auto;">
-					<div class="sl-block-content" style="text-align: left; font-size: 110%;">
-						<p><strong>From the perspective of an application that consumes your extensions:</strong></p>
-					</div>
-				</div>
-				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 180px; height: auto;">
-					<div class="sl-block-content" style="text-align: left; font-size: 140%;">
-						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Stable public APIs and semantic versioning matter enormously</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Breaking changes cascade into application release timelines</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Extension points and hooks matter, but can be hard to align across projects; Lingo couldn't adopt arches-search in 1.0.0 due to this problem</li>
-							<li class="fragment" data-fragment-index="3">Think about your downstream consumers when designing APIs</li>
-						</ul>
-					</div>
-				</div>
-			</section>
-
-			<!-- SLIDE 18: The Future -->
+			<!-- SLIDE 17: The Future -->
 			<section data-transition="default">
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 0px; height: auto;">
@@ -955,25 +1090,26 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 					style="width: 1200px; left: 20px; top: 100px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 140%;">
 						<ul>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="0"><strong>1.1.0</strong>: AAT-scale performance + editorial UX improvements</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1"><strong>arches-search convergence</strong>: when extension points support Lingo's domain facets</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2"><strong>Externalized indexes</strong>: decouple search indexes from the tiles table to avoid compounding GIN overhead across apps</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3"><strong>Deeper ACL integration</strong>: tighter feedback loop between authoring and consumption</li>
-							<li class="fragment" data-fragment-index="4"><strong>Your applications</strong>: Lingo's patterns are reusable
-								<ul style="font-size: 0.8em; margin-top: 0.3em;">
-									<li>arches-querysets based Django views</li>
-									<li>simplified local permissions</li>
-									<li>custom SPA built with Vue & PrimeVue</li>
-									<li>Arches extension composition</li>
-									<li>PostgreSQL-based search</li>
-								</ul>
-							</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0"><strong>1.1.0</strong>: AAT-scale performance + editorial UX polish</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1"><strong>arches-search convergence</strong>: once extension points support our domain facets, we'll migrate</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1"><strong>Externalized indexes</strong>: decouple search from the tiles table so GIN overhead doesn't compound across apps</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2"><strong>Deeper ACL integration</strong>: tighter feedback loop between authoring and consumption</li>
+							<li class="fragment" data-fragment-index="3"><strong>Your applications</strong>: all of these patterns are reusable; the codebase is a reference for building on Arches 8</li>
 						</ul>
 					</div>
 				</div>
-			</section>
+							<aside class="notes">
+					- Move through these quickly; this is forward-looking energy, not detailed roadmap
+					- 1.1.0: the AAT performance work and UX polish from editorial feedback
+					- arches-search convergence: "when they're ready, we'll migrate. The abstraction is already there."
+					- Externalized indexes: this is the long-term answer to the GIN proliferation concern
+					- Last bullet: genuine invitation: "these patterns work, use them"
+					- ~60s
+					- Transition: "So how can you get involved?"
+				</aside>
+				</section>
 
-			<!-- SLIDE 19: Get Involved -->
+			<!-- SLIDE 18: Get Involved -->
 			<section data-transition="default">
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 0px; height: auto;">
@@ -986,22 +1122,45 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 					<div class="sl-block-content" style="text-align: left; font-size: 140%;">
 						<ul>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">GitHub: <code>archesproject/arches-lingo</code></li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Test with your vocabularies: diverse data makes the tool better!</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Test with your vocabularies: diverse data make the tool better!</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Report UX gaps from real editorial work</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Study the codebase as a reference implementation for Arches 8 applications</li>
 						</ul>
 					</div>
 				</div>
-				<!-- TODO: replace with public video URL -->
-			</section>
+				<div class="sl-block" data-block-type="image"
+					style="width: 120px; height: 120px; left: 340px; top: 545px;">
+					<div class="sl-block-content">
+						<img data-src="deck/qr-lingo-demo-video.svg" style="width: 120px; height: 120px;">
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 700px; left: 475px; top: 548px; height: auto;">
+					<div class="sl-block-content" style="text-align: left;">
+						<p style="font-size: 80%; color: #3d85c6; margin: 0 0 4px 0;">Full demo video</p>
+						<p style="font-size: 90%; color: #ffffff; font-family: monospace; margin: 0;">youtu.be/R-x8oAhOm5Y</p>
+					</div>
+				</div>
+							<aside class="notes">
+					- "We want your vocabularies; diverse data make the tool better"
+					- The codebase is intentionally written to be readable and referenceable
+					- This is a genuine call to action, not just a closing pleasantry
+					- ~30s, then move to questions
+				</aside>
+				</section>
 
-			<!-- SLIDE 20: Questions -->
+			<!-- SLIDE 19: Questions -->
 			<section data-transition="default">
 				<div class="sl-block" data-block-type="text"
 					style="width: 1240px; left: 20px; top: 250px; height: auto;">
 					<div class="sl-block-content" style="text-align: left;">
-						<h1>Questions?</h1>
+						<h1>Thanks! Questions?</h1>
 						<p style="margin-top: 1em; font-size: 1.2em;"><code>github.com/archesproject/arches-lingo</code></p>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="image"
+					style="width: 180px; height: 180px; left: 20px; top: 430px;">
+					<div class="sl-block-content"><img data-src="deck/qr-arches-lingo.svg" style="width: 180px; height: 180px;">
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="image"
@@ -1021,13 +1180,17 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 								stroke-linecap="round" d="M1278 0 L0 0"></path>
 						</svg></div>
 				</div>
-			</section>
+							<aside class="notes">
+					- "Thank you! Happy to take questions."
+					- If time allows: offer to show a quick live demo
+				</aside>
+				</section>
 
 		</div>
 	</div>
 
 	<script>
-		var SLConfig = { "deck": { "id": 1, "slug": "lingo-presentation", "title": "Lingo 1.0 and Arches 8.1", "description": "Lessons Learned and the Future", "width": 1280, "height": 720, "margin": 0.05, "visibility": "self", "published_at": "2026-05-20T00:00:00.000Z", "user": { "id": 1, "username": "rgaston", "name": "Rob Gaston" }, "background_transition": "convex", "transition": "default", "theme_font": "montserrat", "theme_color": "cobalt-orange", "center": false, "shuffle": null, "should_loop": false, "slide_count": 19, "rtl": false, "version": 2, "navigation_mode": "default", "language": "en" } };
+		var SLConfig = { "deck": { "id": 1, "slug": "lingo-presentation", "title": "Lingo 1.0 and Arches 8.1", "description": "Lessons Learned and the Future", "width": 1280, "height": 720, "margin": 0.05, "visibility": "self", "published_at": "2026-05-20T00:00:00.000Z", "user": { "id": 1, "username": "rgaston", "name": "Rob Gaston" }, "background_transition": "convex", "transition": "default", "theme_font": "montserrat", "theme_color": "cobalt-orange", "center": false, "shuffle": null, "should_loop": false, "slide_count": 25, "rtl": false, "version": 2, "navigation_mode": "default", "language": "en" } };
 
 		SLConfig.fonts_url = 'lib/fonts/';
 	</script>
@@ -1047,7 +1210,7 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 			progress: true,
 			mouseWheel: false,
 			showNotes: false,
-			slideNumber: false,
+			slideNumber: true,
 			fragmentInURL: true,
 
 			autoSlide: 0,
