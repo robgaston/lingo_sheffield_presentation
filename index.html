@@ -149,6 +149,19 @@
 						<img data-src="deck/lingo-demo.gif" style="width: 620px; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.4);">
 					</div>
 				</div>
+				<div class="sl-block" data-block-type="image"
+					style="width: 90px; height: 90px; left: 625px; top: 590px;">
+					<div class="sl-block-content">
+						<img data-src="deck/qr-lingo-demo-video.svg" style="width: 90px; height: 90px;">
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 520px; left: 725px; top: 593px; height: auto;">
+					<div class="sl-block-content" style="text-align: left;">
+						<p style="font-size: 70%; color: #e08c14; margin: 0 0 4px 0;">Full demo video</p>
+						<p style="font-size: 80%; color: #ffffff; font-family: monospace; margin: 0;">youtu.be/R-x8oAhOm5Y</p>
+					</div>
+				</div>
 				<aside class="notes">
 					<p>- "I gave a full product demo last month; today I want to talk about how we built Lingo and what we learned that's relevant to anyone building on Arches."</p>
 					<p>- Quick orientation slide: don't linger, just establish what Lingo is</p>
@@ -340,24 +353,40 @@ label = tree.aliased_data.appellative_status[0] \
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
-						style="width: 1200px; left: 20px; top: 100px; height: auto;">
-						<div class="sl-block-content" style="text-align: left; font-size: 130%;">
+						style="width: 1200px; left: 20px; top: 100px; height: auto; font-size: 0.9em;">
+						<div class="sl-block-content" style="text-align: left; font-size: 110%;">
 							<ul>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="0"><code>LingoResourceSerializer</code> / <code>LingoTileSerializer</code> extend arches-querysets base classes</li>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">All tile CRUD → DRF generic views (<code>ArchesTileListCreateView</code>, <code>ArchesTileDetailView</code>)</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Custom validation hooks (e.g., SKOS prefLabel uniqueness) live in the serializer</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Custom validation (e.g., SKOS prefLabel uniqueness) lives in the serializer — using the same <code>ResourceTileTree</code> API:</li>
 							</ul>
 						</div>
 					</div>
 					<div class="sl-block" data-block-type="text"
-						style="width: 1200px; left: 20px; top: 480px; height: auto;">
+						style="width: 1200px; left: 20px; top: 350px; height: auto; font-size: 0.9em;">
+						<div class="sl-block-content fragment fade-in" data-fragment-index="2" style="text-align: left;">
+							<pre><code class="language-python">class LingoTileSerializer(ArchesTileSerializer):
+    def validate_appellative_status(self, data, initial_tile_data):
+        new_lang = data.appellative_status_ascribed_name_language
+        new_type = data.appellative_status_ascribed_relation[0]
+
+        scheme = ResourceTileTree.get_tiles(self.graph_slug) \
+            .get(pk=self.initial_data["resourceinstance"])
+        self._check_pref_label_uniqueness(
+            initial_tile_data, scheme, new_lang, new_type
+        )
+        return data</code></pre>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 1200px; left: 20px; top: 595px; height: auto;">
 						<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
 							<p><strong style="color: #e08c14;">Takeaway:</strong> if you're writing tile-level APIs, start with arches-querysets. The boilerplate reduction is dramatic.</p>
 						</div>
 					</div>
 									<aside class="notes">
 						<p>- Key message: arches-querysets isn't just a convenience: it's the right abstraction layer for tile APIs</p>
-						<p>- Mention: custom validation hooks let you enforce SKOS rules (like prefLabel uniqueness per language) in the serializer</p>
+						<p>- The validate method uses ResourceTileTree.get_tiles() — the same aliased API from the previous slide — to enforce SKOS rules at the API layer, not in the view</p>
 						<p>- Transition: "So we had good APIs. What did we build on top of them?"</p>
 					</aside>
 				</section>
@@ -433,6 +462,65 @@ label = tree.aliased_data.appellative_status[0] \
 						<p>- ~20s, just a visual pause</p>
 					</aside>
 					</section>
+				<section data-transition="default">
+					<div class="sl-block" data-block-type="text"
+						style="width: 1200px; left: 20px; top: 0px; height: auto;">
+						<div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left;">
+							<h1><span style="font-size:0.8em">Wiring the SPA Shell</span></h1>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 1200px; left: 20px; top: 90px; height: auto;">
+						<div class="sl-block-content" style="text-align: left; font-size: 110%;">
+							<p>Setup is simple:</p>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 590px; left: 20px; top: 160px; height: auto;">
+						<div class="sl-block-content" style="text-align: left;">
+							<pre><code class="language-python"># apps.py
+class ArchesLingoConfig(AppConfig):
+    name = "arches_lingo"
+    is_arches_application = True  # ← registers with Arches</code></pre>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 650px; left: 630px; top: 160px; height: auto;">
+						<div class="sl-block-content" style="text-align: left;">
+							<pre><code class="language-python"># urls.py
+urlpatterns = [
+    path("", LingoRootView.as_view()),
+    path("scheme/&lt;uuid:id&gt;", LingoRootView.as_view()),
+    path("concept/&lt;uuid:id&gt;", LingoRootView.as_view()),
+    # every route → same view; Vue Router takes over
+]</code></pre>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 1200px; left: 20px; top: 370px; height: auto;">
+						<div class="sl-block-content" style="text-align: left;">
+							<ul>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="0"><code>is_arches_application = True</code> — tells Arches to register this app in the platform shell and asset pipeline</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="1"><code>LingoRootView</code> extends <code>BaseManagerView</code> and renders a single HTML template</li>
+								<li class="fragment" data-fragment-index="2">All URL matching after that is client-side — Vue Router handles it from here</li>
+							</ul>
+						</div>
+					</div>
+					<div class="sl-block" data-block-type="text"
+						style="width: 1200px; left: 20px; top: 610px; height: auto;">
+						<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
+							<p><strong style="color: #e08c14;">Takeaway:</strong> registering an Arches application is two lines of config. The SPA pattern is a single catch-all Django view; Vue Router owns the rest.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						<p>- "Two files of actual setup: apps.py to register with Arches, urls.py to catch all routes"</p>
+						<p>- is_arches_application: tells Arches to include this app in platform navigation and the webpack/Django asset pipeline</p>
+						<p>- The URL pattern: every named route points to LingoRootView. Django's job ends at rendering the HTML shell.</p>
+						<p>- Vue Router takes over from there: route matching, params, navigation guards — all client-side</p>
+						<p>- ~45s</p>
+						<p>- Transition: "Now let's talk about how Lingo performs at scale"</p>
+					</aside>
+				</section>
 			</section>
 
 			<!-- SLIDE 8: PostgreSQL Search (vertical stack) -->
@@ -780,7 +868,7 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 180px; height: auto;">
-					<div class="sl-block-content" style="text-align: left; font-size: 110%;">
+					<div class="sl-block-content" style="text-align: left;">
 						<ul>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Identifier rules are defined per scheme: pattern, namespace, sequence</li>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">On the "publish" lifecycle event, URIs get minted for every concept in the scheme</li>
@@ -790,19 +878,85 @@ inflightChildFetches.set(conceptId, promise);</code></pre>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
-					style="width: 1200px; left: 20px; top: 580px; height: auto;">
+					style="width: 1200px; left: 20px; top: 440px; height: auto;">
+					<div class="sl-block-content fragment fade-in" data-fragment-index="2" style="text-align: left;">
+						<pre><code class="language-python"># On publish: mint a typed ResourceIdentifier for each concept
+ResourceIdentifier.objects.update_or_create(
+    resourceid_id=concept_resource_instance_id,
+    source="arches-lingo",
+    defaults={"identifier": uri, "identifier_type": "uri"},
+)</code></pre>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 610px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
 						<p><strong style="color: #e08c14;">Takeaway:</strong> lifecycle events + typed identifiers let Lingo produce publication-ready linked open data with no external tooling.</p>
 					</div>
 				</div>
 							<aside class="notes">
 					<p>- Walk through the flow: you define identifier rules on the scheme, hit publish, URIs get minted</p>
-					<p>- This uses Arches 8.1's custom typed resource identifiers: a core feature we can plug into</p>
+					<p>- ResourceIdentifier is an Arches 8.1 core model — update_or_create keyed on source="arches-lingo" so republishing is idempotent</p>
 					<p>- The URIs are dereferenceable, so your vocabulary can participate in the linked data ecosystem</p>
 					<p>- "This was one of the headline requirements for Lingo 1.0: proper LOD publishing"</p>
 					<p>- ~60s</p>
 				</aside>
 				</section>
+
+			<!-- Arches Function Hooks -->
+			<section data-transition="default">
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 0px; height: auto;">
+					<div class="sl-block-content" data-placeholder-tag="h1" style="text-align: left;">
+						<h1><span style="font-size:0.8em">Arches Function Hooks</span></h1>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 90px; height: auto;">
+					<div class="sl-block-content" style="text-align: left; font-size: 100%;">
+						<p>Functions hook into tile lifecycle events (<code>post_save</code>, <code>post_delete</code>). Writing a tile inside <code>post_save</code> re-triggers it — guard with a thread-local flag:</p>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 180px; height: auto;">
+					<div class="sl-block-content" style="text-align: left;">
+						<pre><code class="language-python">class ReciprocalRelationshipFunction(BaseFunction):
+    def post_save(self, tile, request, context=None):
+        if getattr(_thread_local, "syncing_save", False):
+            return  # already in a sync: skip to prevent infinite loop
+
+        try:
+            _thread_local.syncing_save = True
+            self._create_or_update_counterpart_tile(tile)
+        finally:
+            _thread_local.syncing_save = False</code></pre>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 430px; height: auto;">
+					<div class="sl-block-content" style="text-align: left; font-size: 100%;">
+						<ul>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Lingo uses this to keep associated concept relationships reciprocal</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">The <code>context</code> parameter lets you pass a sentinel to suppress the hook from internal code paths</li>
+							<li class="fragment" data-fragment-index="2">The <code>finally</code> block is non-negotiable: a bare <code>syncing_save = False</code> after the call leaks state on exceptions</li>
+						</ul>
+					</div>
+				</div>
+				<div class="sl-block" data-block-type="text"
+					style="width: 1200px; left: 20px; top: 640px; height: auto;">
+					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
+						<p><strong style="color: #e08c14;">Takeaway:</strong> any function that writes tiles to the target nodegroup needs this guard. Without it, you'll get a stack overflow on the first save.</p>
+					</div>
+				</div>
+				<aside class="notes">
+					<p>- "This one has bitten everyone who's implemented a function that writes tiles"</p>
+					<p>- The pattern: thread-local flag set before writing, cleared in finally, checked at entry</p>
+					<p>- context parameter: Arches passes it through; you can use it as an additional escape hatch from internal code</p>
+					<p>- The finally is critical: show of hands who has seen state leak from a bare flag reset after an exception</p>
+					<p>- ~60s</p>
+					<p>- Transition: "OK — enough architecture. Let me show you what happened when we pushed Lingo to real scale."</p>
+				</aside>
+			</section>
 
 			<!-- SLIDE 13: Scaling FISH → AAT (vertical stack) -->
 			<section data-transition="default">
