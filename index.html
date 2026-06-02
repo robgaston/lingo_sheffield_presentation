@@ -914,7 +914,7 @@ ResourceIdentifier.objects.update_or_create(
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 90px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 100%;">
-						<p>Functions hook into tile lifecycle events (<code>post_save</code>, <code>post_delete</code>). Writing a tile inside <code>post_save</code> re-triggers it — guard with a thread-local flag:</p>
+						<p>Functions hook into tile CRUD events. Writing a tile to the triggering nodegroup inside <code>post_save</code> re-triggers it — guard with a thread-local flag:</p>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
@@ -937,15 +937,14 @@ ResourceIdentifier.objects.update_or_create(
 					<div class="sl-block-content" style="text-align: left; font-size: 100%;">
 						<ul>
 							<li class="fragment fade-in-then-semi-out" data-fragment-index="0">Lingo uses this to keep associated concept relationships reciprocal</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">The <code>context</code> parameter lets you pass a sentinel to suppress the hook from internal code paths</li>
-							<li class="fragment" data-fragment-index="2">The <code>finally</code> block is non-negotiable: a bare <code>syncing_save = False</code> after the call leaks state on exceptions</li>
+							<li class="fragment" data-fragment-index="2">The <code>finally</code> block is critical: a bare <code>syncing_save = False</code> after the call leaks state on exceptions</li>
 						</ul>
 					</div>
 				</div>
 				<div class="sl-block" data-block-type="text"
 					style="width: 1200px; left: 20px; top: 640px; height: auto;">
 					<div class="sl-block-content" style="text-align: left; font-size: 90%; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px;">
-						<p><strong style="color: #e08c14;">Takeaway:</strong> any function that writes tiles to the target nodegroup needs this guard. Without it, you'll get a stack overflow on the first save.</p>
+						<p><strong style="color: #e08c14;">Takeaway:</strong> any function that writes tiles to the target nodegroup needs a similar guard. Without it, you'll get a stack overflow on the first save.</p>
 					</div>
 				</div>
 				<aside class="notes">
